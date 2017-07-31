@@ -2,22 +2,10 @@ package ch.uzh.utils
 
 import org.apache.spark.sql.expressions.UserDefinedFunction
 import org.apache.spark.sql.functions.udf
+import org.joda.time.format.ISODateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone, Instant}
-import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 
-case class TimePartition(partition: String, datePattern: Option[String] = None, zone: Option[DateTimeZone] = None) {
-
-  private val dateTimeFormatter = if (datePattern.isDefined) {
-    DateTimeFormat.forPattern(datePattern.get)
-  } else {
-    ISODateTimeFormat.dateTime()
-  }
-
-  private val dateTimeZone = if (zone.isDefined) {
-    zone.get
-  } else {
-    DateTimeZone.UTC
-  }
+case class TimePartition(partition: String) {
 
   private val partitionInMillis: Double = partition match {
     case "second" => 1000.0
@@ -31,13 +19,13 @@ case class TimePartition(partition: String, datePattern: Option[String] = None, 
   }
 
   private def millisToString(millis: Long) = partition match {
-    case "second" => new DateTime(millis, dateTimeZone).toString("yyyy-MM-ddTHH:mm:ss")
-    case "minute" => new DateTime(millis, dateTimeZone).toString("yyyy-MM-ddTHH:mm")
-    case "hour" => new DateTime(millis, dateTimeZone).toString("yyyy-MM-ddTHH")
-    case "day" => new DateTime(millis, dateTimeZone).toString("yyyy-MM-dd")
-    case "week" => new DateTime(millis, dateTimeZone).toString("yyyy-MM-dd")
-    case "month" => new DateTime(millis, dateTimeZone).toString("yyyy-MM")
-    case "year" => new DateTime(millis, dateTimeZone).toString("yyyy")
+    case "second" => new DateTime(millis, DateTimeZone.UTC).toString("yyyy-MM-ddTHH:mm:ss")
+    case "minute" => new DateTime(millis, DateTimeZone.UTC).toString("yyyy-MM-ddTHH:mm")
+    case "hour" => new DateTime(millis, DateTimeZone.UTC).toString("yyyy-MM-ddTHH")
+    case "day" => new DateTime(millis, DateTimeZone.UTC).toString("yyyy-MM-dd")
+    case "week" => new DateTime(millis, DateTimeZone.UTC).toString("yyyy-MM-dd")
+    case "month" => new DateTime(millis, DateTimeZone.UTC).toString("yyyy-MM")
+    case "year" => new DateTime(millis, DateTimeZone.UTC).toString("yyyy")
     case _ => millis.toString
   }
 
@@ -47,7 +35,7 @@ case class TimePartition(partition: String, datePattern: Option[String] = None, 
     * @return bucket of the date
     */
   def bucketize(date: String): String = {
-    val dt = Instant.parse(date, dateTimeFormatter)
+    val dt = Instant.parse(date, ISODateTimeFormat.dateTime())
     millisToString(math.round(math.floor((dt.getMillis / partitionInMillis) * partitionInMillis)))
   }
 
