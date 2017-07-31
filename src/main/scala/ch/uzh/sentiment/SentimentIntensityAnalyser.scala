@@ -4,7 +4,6 @@ import java.io.InputStream
 
 import org.apache.spark.sql.expressions.UserDefinedFunction
 import org.apache.spark.sql.functions.udf
-
 import ch.uzh.sentiment.SentimentUtils._
 import ch.uzh.utils.Smiley
 import ch.uzh.utils.MathExtensions.roundAt
@@ -288,15 +287,5 @@ object SentimentIntensityAnalyser {
     }
   }
 
-  /**
-    * spark helper UDF for analysing polarity
-    * @return map of polarities for the text
-    *         { 'pos' -> 0.0,
-    *           'neg' -> 0.0,
-    *           'neu' -> 0.0,
-    *           'compound' -> 0.0
-    *         }
-    */
-  def polarity: UserDefinedFunction = udf(polarityScores _)
 }
 
