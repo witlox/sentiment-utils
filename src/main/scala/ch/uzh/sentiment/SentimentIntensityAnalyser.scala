@@ -24,7 +24,7 @@ object SentimentIntensityAnalyser {
                               "hand to mouth" -> -2.0)
 
   val stream : InputStream = getClass.getResourceAsStream("/lexicon.txt")
-  val lines: Iterator[String] = scala.io.Source.fromInputStream( stream ).getLines
+  val lines: Iterator[String] = scala.io.Source.fromInputStream( stream )("UTF-8").getLines
   val lexicon: Map[String, Double] = lines.map(l => l.split('\t').head -> l.split('\t').tail.head.toDouble).toMap
 
   /**
@@ -154,14 +154,12 @@ object SentimentIntensityAnalyser {
     */
   private def leastCheck(valence: Double, wordsAndEmoticons: Array[String], index: Int): Double = {
     var localValence = valence
-
-    val wordMinOne = wordsAndEmoticons(index - 1).toLowerCase
-    if (index > 1 && !lexicon.contains(wordMinOne) && wordMinOne == "least") {
+    if (index > 1 && !lexicon.contains(wordsAndEmoticons(index - 1).toLowerCase) && wordsAndEmoticons(index - 1).toLowerCase == "least") {
       val wordMinTwo = wordsAndEmoticons(index - 2).toLowerCase
       if (wordMinTwo != "at" && wordMinTwo != "very") {
         localValence = localValence * nScalar
       }
-    } else if (index > 0 && !lexicon.contains(wordMinOne) && wordMinOne == "least") {
+    } else if (index > 0 && !lexicon.contains(wordsAndEmoticons(index - 1).toLowerCase) && wordsAndEmoticons(index - 1).toLowerCase == "least") {
       localValence = localValence * nScalar
     }
 

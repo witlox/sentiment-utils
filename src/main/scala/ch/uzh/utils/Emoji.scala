@@ -7,7 +7,7 @@ case class EmojiData(text: String, native: String, bytes: String, rEncoding: Str
 object Emoji {
 
   private val stream : InputStream = getClass.getResourceAsStream("/emojis.csv")
-  private val lines: Iterator[String] = scala.io.Source.fromInputStream( stream ).getLines
+  private val lines: Iterator[String] = scala.io.Source.fromInputStream(stream)("UTF-8").getLines
 
   private val emojis: List[EmojiData] = {
     (for {

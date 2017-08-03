@@ -20,13 +20,13 @@ object Vader{
     * spark helper UDF for analysing negative polarity between 0.0 and 1.0
     * @return negative polarity
     */
-  def negative: UserDefinedFunction = udf((t: String) => polarityScores(t)("pos"))
+  def negative: UserDefinedFunction = udf((t: String) => polarityScores(t)("neg"))
 
   /**
     * spark helper UDF for analysing neutral polarity between 0.0 and 1.0
     * @return neutral polarity
     */
-  def neutral: UserDefinedFunction = udf((t: String) => polarityScores(t)("pos"))
+  def neutral: UserDefinedFunction = udf((t: String) => polarityScores(t)("neu"))
 
   /**
     * spark helper UDF for analysing compound polarity
@@ -35,5 +35,5 @@ object Vader{
     * negative sentiment: compound score <= -0.5
     * @return compound polarity
     */
-  def compound: UserDefinedFunction = udf((t: String) => polarityScores(t)("pos"))
+  def compound: UserDefinedFunction = udf((t: String) => polarityScores(t)("compound"))
 }
