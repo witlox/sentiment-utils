@@ -1,5 +1,3 @@
-import AssemblyKeys._
-
 lazy val root = (project in file(".")).
   settings(
     name := "sentiment-utils",
@@ -10,7 +8,11 @@ lazy val root = (project in file(".")).
       case PathList("com", "google", xs @ _*) => MergeStrategy.last
       case _ => MergeStrategy.first
     },
-    unmanagedResourceDirectories in Compile += { baseDirectory.value / "src/main/resources" }
+    unmanagedResourceDirectories in Compile += { baseDirectory.value / "src/main/resources" },
+    coverageMinimum := 50,
+    coverageFailOnMinimum := false,
+    coverageHighlighting := true,
+    publishArtifact in Test := false
   )
 
 val configVersion = "1.3.0"

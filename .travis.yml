@@ -1,0 +1,24 @@
+language: scala
+scala:
+- 2.11.8
+script:
+- sbt ++$TRAVIS_SCALA_VERSION clean coverage test coverageReport assembly && sbt ++$TRAVIS_SCALA_VERSION
+  coverageAggregate
+env:
+  global:
+    secure: Z0svm6E8YtanGord/s+IiRTOmABvyL8hCPvGBeKVU1vMowU8LnT07hEXMfmgdiEQ5YdZdHnPI+mnSecpqSlcmX62aEto4ffECHoaiCdzkeiyETVHPoMu2ikXHFskZKnwfqLI7QMBi4H+GVhv/2T/LWXMUkGxWWdBxLWYAgzYcmodJJ4TZX7iQyqnQs9MZHd90JnInmkdTEMgpxnMQUn1vFeJFCNQ2GY9/pMiyAc6vOD5DRm5h/PqNfDUuPTwUxF/NTi+HE/SopJaTKcIPTcl91G6Kjg55PWDNmvjfHA5FTP9hOAEQ/zhqNOG8n33ICc5b2cIfZVrviZSQm5MUqGpyrjLVNwS19rSBIznFK/+NN3LfeY7sQ7cwL2lOVop+JCvDavfwjSU2uA/+LueD/+0vpSlzw4S3GfA0FIWZ55hRXVtMn7G3gXG+oF8KFgQzy+hsOeEncjWbwQ2ZIUPMRql1CxCDr0rWPwh1qQCFMufJhTemA3eI2u9FSHoxo/+/v2nff2pcoJAmy67aMA6mdhPgc92ml5HDgaZpeHb/8Nbwe+tPIyXCh18kuDyU9xPegD/D3wa9IdT7HdoObEistT/gGtmQq3/2WSaQwd+RYtEe0v+rHU3OGRldeFfq+60tIY3bf1tP/Aes8VqIW3XnFI5RAyP11lkUdzYLnQg4mFBEKo=
+before_deploy:
+- git config --local user.name "witlox"
+- git config --local user.email "pim@witlox.io"
+- git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+after_success:
+- sbt ++$TRAVIS_SCALA_VERSION coverageReport coveralls
+deploy:
+  provider: releases
+  api_key:
+    secure: NtOZXarTubN3k4MsYhRycQ9pnolcgND7WJgBwKvM4MDMGZV/TPLfcctaRrZMKbA7N9dvJqHtm7ZzpwHeiNdbtSUyMB4o02kKrzAEy9VZQX/uuLXFW1Omv3mE7XYAwgb2QYxgRgZx3qtbN5PTBGschu0x4FJOnv9YZH12DdLKdWT3WuWfbAffdmakMF16wOsKZwBbgm7d8UgUi0ktYkYwBgofzjE9WTPjBk0NUZ5CZoJG+ACbbwYJ09l0LRbTj0hQfNjghE8/IIQxht1pdZbR5bzG96snWfiepGhtcOOBZxLcAwi6T98qHk3OVkhRqaqqfTfDdMnG7zICgwTUpZj4F3sL80ItJb8AKwZMSP4ir3vsQfx7t05P/woQ7keGE6EkIAnAqssgMLTPUj4rZjIP1zeTgOuaT8rm0z/58Bt5lMX3ulHVlwJINCDRcnVHmIsMlnGxEhFxMTurwxIrNp+Mittx5VQ9Yr5jsXkyX+8ZLJzQIuRiwCu+KVZt79e5H2P4vUcNpobHtcP6zp5UJIEkDYeMiVXxxfx7dma7p48Vl1LByD0TBRh7b9hVMifmMuc1lIkWA1EuO66kM/zzZqXDTbfBa3jscW8DdgN7TCJ3rTHbeFPnbXzPAKopPs8UCWz+uGjt/Omjjj2Y14FdVeJagnsLM8l0Piczf603MYLUBIg=
+  file_glob: true
+  file: target/**/*.jar
+  on:
+    tags: true
+  skip_cleanup: true

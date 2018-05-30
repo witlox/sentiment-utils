@@ -1,6 +1,6 @@
-package ch.uzh.sentiment
+package io.witlox.sentiment
 
-import ch.uzh.utils.{Emoji, Smiley, TimePartition}
+import io.witlox.utils.{Emoji, Smiley, TimePartition}
 import org.scalatest.{FlatSpec, Matchers}
 
 class UtilsTests extends FlatSpec with Matchers {

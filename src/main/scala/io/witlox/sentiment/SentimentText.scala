@@ -1,6 +1,6 @@
-package ch.uzh.sentiment
+package io.witlox.sentiment
 
-import ch.uzh.utils.Emoji
+import io.witlox.utils.Emoji
 
 import scala.util.matching.Regex
 

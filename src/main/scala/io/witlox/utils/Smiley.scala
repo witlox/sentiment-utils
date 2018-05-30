@@ -1,4 +1,4 @@
-package ch.uzh.utils
+package io.witlox.utils
 
 object Smiley {
 

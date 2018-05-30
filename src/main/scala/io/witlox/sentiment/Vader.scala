@@ -1,6 +1,6 @@
-package ch.uzh.sentiment
+package io.witlox.sentiment
 
-import ch.uzh.sentiment.SentimentIntensityAnalyser.polarityScores
+import SentimentIntensityAnalyser.polarityScores
 import org.apache.spark.sql.expressions.UserDefinedFunction
 import org.apache.spark.sql.functions.udf
 

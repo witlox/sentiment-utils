@@ -1,12 +1,10 @@
-package ch.uzh.sentiment
+package io.witlox.sentiment
 
 import java.io.InputStream
 
-import org.apache.spark.sql.expressions.UserDefinedFunction
-import org.apache.spark.sql.functions.udf
-import ch.uzh.sentiment.SentimentUtils._
-import ch.uzh.utils.Smiley
-import ch.uzh.utils.MathExtensions.roundAt
+import SentimentUtils._
+import io.witlox.utils.Smiley
+import io.witlox.utils.MathExtensions.roundAt
 
 /**
   * Analyse Sentiments using Vader algorithm

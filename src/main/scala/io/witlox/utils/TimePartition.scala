@@ -1,4 +1,4 @@
-package ch.uzh.utils
+package io.witlox.utils
 
 import org.apache.spark.sql.expressions.UserDefinedFunction
 import org.apache.spark.sql.functions.udf

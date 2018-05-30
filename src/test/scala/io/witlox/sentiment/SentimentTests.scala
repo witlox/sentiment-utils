@@ -1,7 +1,7 @@
-package ch.uzh.sentiment
+package io.witlox.sentiment
 
 import org.scalatest.{FlatSpec, Matchers}
-import ch.uzh.sentiment.SentimentText.{wordsPlusPunctuation, wordsAndEmoticons}
+import SentimentText.{wordsPlusPunctuation, wordsAndEmoticons}
 
 class SentimentTests extends FlatSpec with Matchers {
 

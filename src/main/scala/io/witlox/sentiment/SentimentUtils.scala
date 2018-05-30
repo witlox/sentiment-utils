@@ -1,4 +1,4 @@
-package ch.uzh.sentiment
+package io.witlox.sentiment
 
 /**
   * Scala conversion of https://github.com/cjhutto/vaderSentiment
