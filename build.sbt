@@ -3,9 +3,8 @@ lazy val root = (project in file(".")).
     name := "sentiment-utils",
     version := "1.0",
     scalaVersion := "2.11.8",
-    mergeStrategy in assembly := {
-      case PathList("org", "apache", xs @ _*) => MergeStrategy.last
-      case PathList("com", "google", xs @ _*) => MergeStrategy.last
+    assemblyMergeStrategy in assembly := {
+      case n if n.startsWith("META-INF/MANIFEST.MF") => MergeStrategy.discard
       case _ => MergeStrategy.first
     },
     unmanagedResourceDirectories in Compile += { baseDirectory.value / "src/main/resources" },
@@ -15,18 +14,13 @@ lazy val root = (project in file(".")).
     publishArtifact in Test := false
   )
 
-val configVersion = "1.3.0"
-val sparkVersion = "2.1.0"
+val scalaTestVersion = "3.0.5"
+val sparkVersion = "2.2.1"
 val jodaTimeVersion = "2.9.9"
 
 libraryDependencies ++= Seq(
-  "com.typesafe" % "config" % configVersion,
+  "org.scalatest" %% "scalatest" % scalaTestVersion % "test",
   "org.apache.spark" %% "spark-core" % sparkVersion % "provided",
-  "org.apache.spark" %% "spark-mllib" % sparkVersion  % "provided",
   "org.apache.spark" %% "spark-sql" % sparkVersion % "provided",
   "joda-time" % "joda-time" % jodaTimeVersion
-)
-
-lazy val defaultSettings = Defaults.coreDefaultSettings ++ Seq(
-  resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
 )

@@ -16,14 +16,39 @@ Direct calling in Scala:
 SentimentIntensityAnalyser.polarityScores("sentimental text here") 
 ``` 
 
-Use of the UDF:
+or as UDF:
+
 ```scala
 import io.witlox.sentiment.Vader._
 
 ...
 
+// using a UDF you would have to unwrap the map to it's respective columns, here the functions
+// are split by element of the map, so simply add them column by column
+
 val dfWithPositiveSentiment = df.withColumn("positive", positive($"text"))
 
 val dfWithCompoundSentiment = dfWithPositiveSentiment.withColumn("sentiment", compound($"text"))
+
+```
+
+Also included is a bucketing function for dates. In order to group sentiments (for example in Tweets) we need to group them.
+
+```scala
+import io.witlox.utils.TimePartition
+
+// create a TimePartition on year (smallest available is milliseconds)
+val tp = TimePartition("year")
+
+val bucket = tp.bucketize("2012-01-01T01:01:01.000Z")
+
+```
+
+or as UDF:
+
+```scala
+val tp = TimePartition("year")
+
+val dfWithBucket = df.withColumn("bucket", tp.bucket($"ISODateTimeFormatString"))
 
 ```
