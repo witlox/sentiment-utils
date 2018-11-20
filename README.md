@@ -1,4 +1,5 @@
 # Vader Sentiment in Scala with Spark [![Build Status](https://travis-ci.org/witlox/sentiment-utils.svg?branch=master)](https://travis-ci.org/witlox/sentiment-utils) [![Coverage Status](https://coveralls.io/repos/github/witlox/sentiment-utils/badge.svg?branch=master)](https://coveralls.io/github/witlox/sentiment-utils?branch=master)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwitlox%2Fsentiment-utils.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwitlox%2Fsentiment-utils?ref=badge_shield)
 
 This is a Scala conversion of [https://github.com/cjhutto/vaderSentiment](https://github.com/cjhutto/vaderSentiment).  
 It contains UDF wrappers for the functions, and outputs a map of the sentiments corresponding to a text.  
@@ -52,3 +53,7 @@ val tp = TimePartition("year")
 val dfWithBucket = df.withColumn("bucket", tp.bucket($"ISODateTimeFormatString"))
 
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwitlox%2Fsentiment-utils.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwitlox%2Fsentiment-utils?ref=badge_large)
